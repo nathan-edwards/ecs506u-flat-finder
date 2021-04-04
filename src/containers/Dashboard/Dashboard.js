@@ -3,6 +3,8 @@ import { Card, Button, Alert } from "react-bootstrap";
 import { useAuth } from "../../contexts/AuthContext";
 import { Link, useHistory } from "react-router-dom";
 
+import Header from "../../components/Header/Header";
+
 export default function Dashboard() {
   const [error, setError] = useState("");
   const { currentUser, logout } = useAuth();
@@ -21,7 +23,8 @@ export default function Dashboard() {
 
   return (
     <>
-      <Card>
+      <Header />
+      {/* <Card>
         <Card.Body>
           <h2 className="text-center mb-4">Profile</h2>
           {error && <Alert variant="danger">{error}</Alert>}
@@ -35,7 +38,7 @@ export default function Dashboard() {
         <Button variant="link" onClick={handleLogout}>
           Log Out
         </Button>
-      </div>
+      </div> */}
     </>
   );
 }

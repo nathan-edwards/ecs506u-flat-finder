@@ -4,17 +4,12 @@ import SignUp from "../Auth/SignUp";
 import Dashboard from "../Dashboard/Dashboard";
 import Login from "../Auth/Login.js";
 import ForgotPassword from "../Auth/ForgotPassword";
-import UpdateProfile from "../Auth/UpdateProfile";
+import UpdateProfile from "../UserProfile/UpdateProfile";
 import PrivateRoute from "../PrivateRoute";
-import { Container } from "react-bootstrap";
 
 function App() {
   return (
-    <Container
-      className="d-flex align-items-center justify-content-center"
-      style={{ minHeight: "100vh" }}
-    >
-      <div className="w-100" style={{ maxWidth: "400px" }}>
+      <div>
         <Router>
           <AuthProvider>
             <Switch>
@@ -27,7 +22,6 @@ function App() {
           </AuthProvider>
         </Router>
       </div>
-    </Container>
   );
 }
 
