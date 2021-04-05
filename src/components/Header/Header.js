@@ -19,12 +19,12 @@ function Header() {
   return (
     <header>
       <Navbar bg="light" expand="lg">
-        <Navbar.Brand href="#home">myPlace</Navbar.Brand>
+        <Navbar.Brand href="/">myPlace</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="col-xs-4">
-            <Nav.Link href="#rent">Rent</Nav.Link>
-            <Nav.Link href="#share">Flat Share</Nav.Link>
+            <Nav.Link href="/?type=rent">Rent</Nav.Link>
+            <Nav.Link href="/?type=flatshare">Flat Share</Nav.Link>
           </Nav>
           <Form inline className="col-xs-4 mx-auto">
             <FormControl style={{width: 575}} type="text" placeholder="Enter Location" className="mr-sm-2" />

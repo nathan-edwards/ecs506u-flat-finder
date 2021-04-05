@@ -8,7 +8,7 @@ export default function UpdateProfile() {
   const emailRef = useRef();
   const passwordRef = useRef();
   const passwordConfirmRef = useRef();
-  const photoURLRef = useRef();
+  // const photoURLRef = useRef();
   const { currentUser, updatePassword, updateEmail, updateProfile } = useAuth();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);

@@ -1,44 +1,66 @@
-import React, { useState } from "react";
-import { Card, Button, Alert } from "react-bootstrap";
-import { useAuth } from "../../contexts/AuthContext";
-import { Link, useHistory } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { CardDeck } from "react-bootstrap";
+// import { useAuth } from "../../contexts/AuthContext";
+import { useLocation } from "react-router-dom";
+import { firestore } from "../../firebase";
+import "holderjs";
 
+import "../../styles/style.css";
 import Header from "../../components/Header/Header";
+import PropertyCard from "../../components/PropertyCard/PropertyCard";
 
 export default function Dashboard() {
-  const [error, setError] = useState("");
-  const { currentUser, logout } = useAuth();
-  const history = useHistory();
+  // const [error, setError] = useState("");
+  // const { currentUser, logout } = useAuth();
+  const [loading, setLoading] = useState(true);
+  const [properties, setProperties] = useState();
+  // const history = useHistory();
 
-  async function handleLogout() {
-    setError("");
+  let ref = firestore.collection("properties");
+  let query = useQuery();
 
-    try {
-      await logout();
-      history.pushState("/login");
-    } catch {
-      setError("Failed to log out");
+  function useQuery() {
+    return new URLSearchParams(useLocation().search);
+  }
+
+  function getProperties() {
+    setLoading(true);
+    console.log(query.get("type"));
+    if (query.get("type") === "rent") {
+      ref = ref.where("propertyType", "==", "Rent");
+    } else if (query.get("type") === "flatshare") {
+      ref = ref.where("propertyType", "==", "Flat Share");
+    } else {
+      ref = firestore.collection("properties");
     }
+    ref.get().then((item) => {
+      const items = item.docs.map((doc) => doc.data());
+      setProperties(items);
+      setLoading(false);
+    });
+  }
+
+  useEffect(() => {
+    getProperties();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  if (loading) {
+    return <h1>Loading...</h1>;
   }
 
   return (
     <>
       <Header />
-      {/* <Card>
-        <Card.Body>
-          <h2 className="text-center mb-4">Profile</h2>
-          {error && <Alert variant="danger">{error}</Alert>}
-          <strong>Email:</strong> {currentUser.email}
-          <Link to="/update-profile" className="btn btn-primary w-100 mt-3">
-            Update Profile
-          </Link>
-        </Card.Body>
-      </Card>
-      <div className="w-100 text-center mt-2">
-        <Button variant="link" onClick={handleLogout}>
-          Log Out
-        </Button>
-      </div> */}
+      <div className="propertyGrid">
+        <CardDeck>
+          {properties.map((property) => (
+            <div key={property.id}>
+              <PropertyCard property={property} />
+            </div>
+          ))}
+        </CardDeck>
+      </div>
     </>
   );
 }
