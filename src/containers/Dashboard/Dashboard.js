@@ -25,7 +25,6 @@ export default function Dashboard() {
 
   function getProperties() {
     setLoading(true);
-    console.log(query.get("type"));
     if (query.get("type") === "rent") {
       ref = ref.where("propertyType", "==", "Rent");
     } else if (query.get("type") === "flatshare") {
