@@ -2,6 +2,7 @@ import React, { useRef, useState } from "react";
 import { Form, Button, Card, Alert, Container, Col } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
+import { useAuth } from "../../contexts/AuthContext";
 
 import { firestore, storage } from "../../firebase";
 
@@ -16,6 +17,7 @@ export default function NewProperty() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [photoUrl, setPhotoUrl] = useState(null);
+  const { currentUser } = useAuth();
   const history = useHistory();
 
   const ref = firestore.collection("properties");
@@ -51,6 +53,7 @@ export default function NewProperty() {
       rentWeek: Math.ceil(((rentRef.current.value * 12) / 365.25) * 7),
       propertyType: propTypeRef.current.value,
       photo: photoUrl,
+      host: currentUser.uid,
     });
     history.push("/");
     setLoading(false);

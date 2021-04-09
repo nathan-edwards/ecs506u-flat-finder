@@ -2,17 +2,20 @@ import React, { useRef, useState } from "react";
 import { Form, Button, Card, Alert, Container } from "react-bootstrap";
 import { useAuth } from "../../contexts/AuthContext";
 import { Link, useHistory } from "react-router-dom";
+import { firestore } from "../../firebase";
 
 export default function SignUp() {
   const displayNameRef = useRef();
   const emailRef = useRef();
   const passwordRef = useRef();
   const passwordConfirmRef = useRef();
-  // const phoneRef = useRef();
-  const { signup, updateProfile } = useAuth();
+  const phoneRef = useRef();
+  const { signup, updateProfile, currentUser } = useAuth();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const history = useHistory();
+
+  const ref = firestore.collection("users");
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -26,11 +29,27 @@ export default function SignUp() {
       setLoading(true);
       await signup(emailRef.current.value, passwordRef.current.value);
       await updateProfile(displayNameRef.current.value, undefined);
+      addUserInfo({
+        id: currentUser.uid,
+        name: currentUser.displayName,
+        email: currentUser.email,
+        photoUrl: currentUser.photoURL,
+        phoneNumber: phoneRef,
+      })
       history.push("/");
     } catch {
       setError("Failed to create an account");
     }
     setLoading(false);
+  }
+
+  function addUserInfo(submission) {
+    ref
+      .doc(submission.id)
+      .set(submission)
+      .catch((err) => {
+        setError(err);
+      });
   }
 
   return (

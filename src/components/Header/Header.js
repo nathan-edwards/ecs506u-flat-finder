@@ -37,11 +37,11 @@ function Header() {
 
   return (
     <header>
-      <Navbar bg="light" expand="lg">
+      <Navbar style={{ backgroundColor: "#1c212d" }} variant="dark" expand="lg">
         <Navbar.Brand href="/">
           <div>
             <span style={{ fontWeight: 400, font: "Roboto" }}>my</span>
-            <span style={{ color: "#519E8A", fontWeight: 900, font: "Roboto" }}>
+            <span style={{ color: "#30d69a", fontWeight: 700, font: "Roboto" }}>
               Place
             </span>
           </div>
@@ -49,8 +49,12 @@ function Header() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="col-xs-4">
-            <Nav.Link href="/?type=rent">Rent</Nav.Link>
-            <Nav.Link href="/?type=flatshare">Flat Share</Nav.Link>
+            <Nav.Link style={{ color: "#8c97ab" }} href="/?type=rent">
+              Rent
+            </Nav.Link>
+            <Nav.Link style={{ color: "#8c97ab" }} href="/?type=flatshare">
+              Flat Share
+            </Nav.Link>
           </Nav>
           <Form onSubmit={handleSubmit} inline className="col-xs-4 mx-auto">
             <FormControl
@@ -60,12 +64,12 @@ function Header() {
               className="mr-sm-2"
               ref={locationRef}
             />
-            <Button variant="outline-success" disabled={loading} type="submit">
+            <Button variant="light" disabled={loading} type="submit">
               Search
             </Button>
           </Form>
           <NavDropdown
-            alignRight="right"
+            alignRight={true}
             title={currentUser.displayName}
             id="nav-dropdown"
           >

@@ -5,6 +5,8 @@ import "holderjs";
 
 function PropertyCard(props) {
   const property = props.property;
+  const link = "/property/" + property.id
+  
   return (
     <div>
       <Card style={{ width: "18rem", marginTop: "5%" }}>
@@ -17,6 +19,7 @@ function PropertyCard(props) {
           </Card.Text>
           <Card.Text>£{property.rentMonth} pcm</Card.Text>
           <Card.Text>£{property.rentWeek} pw</Card.Text>
+          <a href={link} class="btn btn-primary stretched-link"> View Property </a>
         </Card.Body>
       </Card>
     </div>

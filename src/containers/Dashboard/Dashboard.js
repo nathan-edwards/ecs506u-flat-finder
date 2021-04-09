@@ -2,11 +2,11 @@ import React, { useState, useEffect } from "react";
 import { CardDeck } from "react-bootstrap";
 // import { useAuth } from "../../contexts/AuthContext";
 import { useLocation } from "react-router-dom";
-import { firestore } from "../../firebase";
 import "holderjs";
+import Loader from 'react-loaders'
 
 import "../../styles/style.css";
-import Header from "../../components/Header/Header";
+import { firestore } from "../../firebase";
 import PropertyCard from "../../components/PropertyCard/PropertyCard";
 
 export default function Dashboard() {
@@ -45,12 +45,11 @@ export default function Dashboard() {
   }, []);
 
   if (loading) {
-    return <h1>Loading...</h1>;
+    return <Loader type="ball-pulse" />;
   }
 
   return (
     <>
-      <Header />
       <div className="propertyGrid">
         <CardDeck>
           {properties.map((property) => (
