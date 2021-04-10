@@ -36,7 +36,9 @@ export default function UpdateProfile() {
     // }
 
     if (displayNameRef.current.value !== currentUser.displayName) {
-      promises.push(updateProfile(displayNameRef.current.value));
+      promises.push(
+        updateProfile(displayNameRef.current.value)
+      );
     }
 
     if (emailRef.current.value !== currentUser.email) {

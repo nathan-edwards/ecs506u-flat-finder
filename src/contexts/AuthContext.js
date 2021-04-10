@@ -38,7 +38,6 @@ export function AuthProvider({ children }) {
   function updateProfile(name) {
     return currentUser.updateProfile({
       displayName: name,
-      photoURL: undefined,
     });
   }
 
