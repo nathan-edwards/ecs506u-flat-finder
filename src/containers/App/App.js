@@ -9,6 +9,7 @@ import UserProfile from "../UserProfile/UserProfile";
 import NewProperty from "../Property/NewProperty";
 import PropertyView from "../Property/PropertyView";
 import PrivateRoute from "../PrivateRoute";
+import AdminProfile from "../UserProfile/AdminProfile"
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
             <PrivateRoute exact path="/" component={Dashboard} />
             <PrivateRoute path="/update-profile" component={UpdateProfile} />
             <PrivateRoute path="/profile" component={UserProfile} />
+            <PrivateRoute path="/admin" component={AdminProfile} />
             <PrivateRoute path="/new-property" component={NewProperty} />
             <PrivateRoute
               path="/property/:propertyID"
