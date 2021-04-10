@@ -12,7 +12,8 @@ import { useAuth } from "../../contexts/AuthContext";
 import "./Header.css";
 
 function Header() {
-  const [setError] = useState("");
+  // eslint-disable-next-line
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const { currentUser, logout } = useAuth();
   const locationRef = useRef();
