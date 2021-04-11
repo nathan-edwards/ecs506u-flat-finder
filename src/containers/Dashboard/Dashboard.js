@@ -1,20 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { CardDeck } from "react-bootstrap";
-// import { useAuth } from "../../contexts/AuthContext";
 import { useLocation } from "react-router-dom";
-import "holderjs";
-import Loader from 'react-loaders'
+import Loader from "react-loaders";
 
 import "../../styles/style.css";
 import { firestore } from "../../firebase";
 import PropertyCard from "../../components/PropertyCard/PropertyCard";
 
 export default function Dashboard() {
-  // const [error, setError] = useState("");
-  // const { currentUser, logout } = useAuth();
   const [loading, setLoading] = useState(true);
   const [properties, setProperties] = useState();
-  // const history = useHistory();
 
   let ref = firestore.collection("properties");
   let query = useQuery();
