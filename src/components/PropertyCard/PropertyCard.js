@@ -19,7 +19,7 @@ function PropertyCard(props) {
           </Card.Text>
           <Card.Text>£{property.rentMonth} pcm</Card.Text>
           <Card.Text>£{property.rentWeek} pw</Card.Text>
-          <a href={link} class="btn btn-primary stretched-link"> View Property </a>
+          <a href={link} className="btn btn-primary stretched-link"> View Property </a>
         </Card.Body>
       </Card>
     </div>

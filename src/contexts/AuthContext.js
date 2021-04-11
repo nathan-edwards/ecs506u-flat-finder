@@ -35,9 +35,10 @@ export function AuthProvider({ children }) {
     return currentUser.updatePassword(password);
   }
 
-  function updateProfile(name) {
+  function updateProfile(name, userType) {
     return currentUser.updateProfile({
       displayName: name,
+      photoURL: userType,
     });
   }
 

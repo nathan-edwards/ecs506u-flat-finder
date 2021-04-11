@@ -29,7 +29,7 @@ export default function SignUp() {
   }
 
   async function submitUserInfo() {
-    await user.updateProfile({ displayName: displayNameRef.current.value });
+    await user.updateProfile({ displayName: displayNameRef.current.value, photoURL: userTypeRef.current.value });
     addUserInfo({
       id: user.uid,
       name: user.displayName,
