@@ -5,6 +5,7 @@ import { Link, useHistory } from "react-router-dom";
 
 export default function UpdateProfile() {
   const displayNameRef = useRef();
+  const photoURLRef = useRef();
   const emailRef = useRef();
   const passwordRef = useRef();
   const passwordConfirmRef = useRef();
@@ -35,8 +36,10 @@ export default function UpdateProfile() {
     //   promises.push(updateProfile(undefined, photoURLRef))
     // }
 
-    if (displayNameRef.current.value !== currentUser.displayName) {
-      promises.push(updateProfile(displayNameRef.current.value));
+    if (displayNameRef.current.value !== currentUser.displayName || photoURLRef.current.value !== currentUser.photoURL) {
+      promises.push(
+        updateProfile(displayNameRef.current.value, photoURLRef.current.value)
+      );
     }
 
     if (emailRef.current.value !== currentUser.email) {
@@ -49,7 +52,7 @@ export default function UpdateProfile() {
 
     Promise.all(promises)
       .then(() => {
-        history.push("/");
+        history.push("/profile");
       })
       .catch(() => {
         setError("Failed to update account");
@@ -73,6 +76,15 @@ export default function UpdateProfile() {
                 ref={displayNameRef}
                 required
                 defaultValue={currentUser.displayName}
+              />
+            </Form.Group>
+            <Form.Group id="user-type">
+              <Form.Label>User Type</Form.Label>
+              <Form.Control
+                type="text"
+                ref={photoURLRef}
+                required
+                defaultValue={currentUser.photoURL}
               />
             </Form.Group>
             <Form.Group id="email">

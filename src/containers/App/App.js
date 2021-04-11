@@ -2,6 +2,8 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { AuthProvider } from "../../contexts/AuthContext";
 import SignUp from "../Auth/SignUp";
 import Dashboard from "../Dashboard/Dashboard";
+import AdminDashboard from "../Dashboard/AdminDashboard";
+import HostDashboard from "../Dashboard/HostDashboard";
 import Login from "../Auth/Login.js";
 import ForgotPassword from "../Auth/ForgotPassword";
 import UpdateProfile from "../UserProfile/UpdateProfile";
@@ -20,11 +22,12 @@ function App() {
             <Route path="/signup" component={SignUp} />
             <Route path="/login" component={Login} />
             <Route path="/forgot-password" component={ForgotPassword} />
-            <PrivateRoute exact path="/" component={Dashboard} />
-            <PrivateRoute path="/update-profile" component={UpdateProfile} />
-            <PrivateRoute path="/profile" component={UserProfile} />
-            <PrivateRoute path="/admin" component={AdminProfile} />
-            <PrivateRoute path="/new-property" component={NewProperty} />
+            <PrivateRoute permission={"All"} exact path="/" component={Dashboard} />
+            <PrivateRoute permission={"Admin"} path="/admin" component={AdminDashboard} />
+            <PrivateRoute permission={"Host"} path="/host" component={HostDashboard} />
+            <PrivateRoute permission={"Host"} path="/new-property" component={NewProperty} />
+            <PrivateRoute permission={"All"} path="/update-profile" component={UpdateProfile} />
+            <PrivateRoute permission={"All"} path="/profile" component={UserProfile} />
             <PrivateRoute
               path="/property/:propertyID"
               component={PropertyView}

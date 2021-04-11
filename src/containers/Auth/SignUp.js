@@ -2,20 +2,43 @@ import React, { useRef, useState } from "react";
 import { Form, Button, Card, Alert, Container } from "react-bootstrap";
 import { useAuth } from "../../contexts/AuthContext";
 import { Link, useHistory } from "react-router-dom";
-import { firestore } from "../../firebase";
+import { firestore, auth } from "../../firebase";
 
 export default function SignUp() {
   const displayNameRef = useRef();
   const emailRef = useRef();
+  const userTypeRef = useRef();
   const passwordRef = useRef();
   const passwordConfirmRef = useRef();
   const phoneRef = useRef();
-  const { signup, updateProfile, currentUser } = useAuth();
+  const { signup } = useAuth();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const history = useHistory();
 
   const ref = firestore.collection("users");
+  let user = auth.currentUser;
+
+  function addUserInfo(submission) {
+    ref
+      .doc(submission.id)
+      .set(submission)
+      .catch((err) => {
+        setError(err);
+      });
+  }
+
+  async function submitUserInfo() {
+    await user.updateProfile({ displayName: displayNameRef.current.value, photoURL: userTypeRef.current.value });
+    addUserInfo({
+      id: user.uid,
+      name: user.displayName,
+      email: user.email,
+      photoUrl: user.photoURL,
+      phoneNumber: phoneRef.current.value,
+      userType: userTypeRef.current.value,
+    });
+  }
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -28,28 +51,12 @@ export default function SignUp() {
       setError("");
       setLoading(true);
       await signup(emailRef.current.value, passwordRef.current.value);
-      await updateProfile(displayNameRef.current.value, undefined);
-      addUserInfo({
-        id: currentUser.uid,
-        name: currentUser.displayName,
-        email: currentUser.email,
-        photoUrl: currentUser.photoURL,
-        phoneNumber: phoneRef,
-      })
+      await submitUserInfo();
       history.push("/");
     } catch {
       setError("Failed to create an account");
     }
     setLoading(false);
-  }
-
-  function addUserInfo(submission) {
-    ref
-      .doc(submission.id)
-      .set(submission)
-      .catch((err) => {
-        setError(err);
-      });
   }
 
   return (
@@ -71,6 +78,17 @@ export default function SignUp() {
                 <Form.Group id="email">
                   <Form.Label>Email</Form.Label>
                   <Form.Control type="email" ref={emailRef} required />
+                </Form.Group>
+                <Form.Group id="user-type">
+                  <Form.Label>User Type</Form.Label>
+                  <Form.Control as="select" ref={userTypeRef} required>
+                    <option>Guest</option>
+                    <option>Host</option>
+                  </Form.Control>
+                </Form.Group>
+                <Form.Group id="phone-number">
+                  <Form.Label>Phone Number</Form.Label>
+                  <Form.Control type="text" ref={phoneRef} required />
                 </Form.Group>
                 <Form.Group id="password">
                   <Form.Label>Password</Form.Label>
