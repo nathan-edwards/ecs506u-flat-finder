@@ -11,7 +11,6 @@ import UserProfile from "../UserProfile/UserProfile";
 import NewProperty from "../Property/NewProperty";
 import PropertyView from "../Property/PropertyView";
 import PrivateRoute from "../PrivateRoute";
-import AdminProfile from "../UserProfile/AdminProfile"
 
 function App() {
   return (
