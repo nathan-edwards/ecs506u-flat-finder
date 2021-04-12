@@ -9,7 +9,8 @@ import ForgotPassword from "../Auth/ForgotPassword";
 import UpdateProfile from "../UserProfile/UpdateProfile";
 import UserProfile from "../UserProfile/UserProfile";
 import NewProperty from "../Property/NewProperty";
-import PropertyView from "../Property/PropertyView";
+import ViewProperty from "../Property/ViewProperty";
+import EditProperty from "../Property/EditProperty";
 import PrivateRoute from "../PrivateRoute";
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
             <Route path="/signup" component={SignUp} />
             <Route path="/login" component={Login} />
             <Route path="/forgot-password" component={ForgotPassword} />
+<<<<<<< HEAD
             <PrivateRoute permission={"All"} exact path="/" component={Dashboard} />
             <PrivateRoute permission={"Admin"} path="/admin" component={AdminDashboard} />
             <PrivateRoute permission={"Host"} path="/host" component={HostDashboard} />
@@ -30,6 +32,48 @@ function App() {
             <PrivateRoute permission={"All"}
               path="/property/:propertyID"
               component={PropertyView}
+=======
+            <PrivateRoute
+              permission={"All"}
+              exact
+              path="/"
+              component={Dashboard}
+            />
+            <PrivateRoute
+              permission={"Admin"}
+              path="/admin"
+              component={AdminDashboard}
+            />
+            <PrivateRoute
+              permission={"Host"}
+              path="/host"
+              component={HostDashboard}
+            />
+            <PrivateRoute
+              permission={"All"}
+              path="/profile/update"
+              component={UpdateProfile}
+            />
+            <PrivateRoute
+              permission={"All"}
+              path="/profile"
+              component={UserProfile}
+            />
+            <PrivateRoute
+              permission={"Host"}
+              path="/property/new"
+              component={NewProperty}
+            />
+            <PrivateRoute
+              permission={"Host"}
+              exact path="/property/:propertyID"
+              component={ViewProperty}
+            />
+            <PrivateRoute
+              permission={"Host"}
+              exact path="/property/edit/:propertyID"
+              component={EditProperty}
+>>>>>>> c640c83f43c45a7d001982abc855d2078f61fe48
             />
           </Switch>
         </AuthProvider>

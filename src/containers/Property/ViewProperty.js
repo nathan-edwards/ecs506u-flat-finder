@@ -6,13 +6,11 @@ import "photoswipe/dist/photoswipe.css";
 import "photoswipe/dist/default-skin/default-skin.css";
 import { Gallery, Item } from "react-photoswipe-gallery";
 import Loader from "react-loaders";
-// import fetchHost from "./HostInfo";
-// import fetchProperty from "./PropertyInfo";
 
 import { firestore } from "../../firebase";
 import "../../styles/style.css";
 
-export default function PropertyView() {
+export default function ViewProperty() {
   const { propertyID } = useParams();
   const [loading, setLoading] = useState(true);
   // eslint-disable-next-line

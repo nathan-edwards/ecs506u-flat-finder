@@ -34,7 +34,7 @@ export default function UserProfile() {
           <p>
             <strong>User Type:</strong> {currentUser.photoURL}
           </p>
-          <Link to="/update-profile" className="btn btn-primary w-100 mt-3">
+          <Link to="/profile/update" className="btn btn-primary w-100 mt-3">
             Update Profile
           </Link>
         </Card.Body>
