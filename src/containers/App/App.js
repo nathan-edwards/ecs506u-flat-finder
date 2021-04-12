@@ -11,7 +11,9 @@ import UserProfile from "../UserProfile/UserProfile";
 import NewProperty from "../Property/NewProperty";
 import ViewProperty from "../Property/ViewProperty";
 import EditProperty from "../Property/EditProperty";
+import NewReport from "../Report/NewReport"
 import PrivateRoute from "../PrivateRoute";
+
 
 function App() {
   return (
@@ -22,17 +24,6 @@ function App() {
             <Route path="/signup" component={SignUp} />
             <Route path="/login" component={Login} />
             <Route path="/forgot-password" component={ForgotPassword} />
-<<<<<<< HEAD
-            <PrivateRoute permission={"All"} exact path="/" component={Dashboard} />
-            <PrivateRoute permission={"Admin"} path="/admin" component={AdminDashboard} />
-            <PrivateRoute permission={"Host"} path="/host" component={HostDashboard} />
-            <PrivateRoute permission={"Host"} path="/new-property" component={NewProperty} />
-            <PrivateRoute permission={"All"} path="/update-profile" component={UpdateProfile} />
-            <PrivateRoute permission={"All"} path="/profile" component={UserProfile} />
-            <PrivateRoute permission={"All"}
-              path="/property/:propertyID"
-              component={PropertyView}
-=======
             <PrivateRoute
               permission={"All"}
               exact
@@ -73,7 +64,11 @@ function App() {
               permission={"Host"}
               exact path="/property/edit/:propertyID"
               component={EditProperty}
->>>>>>> c640c83f43c45a7d001982abc855d2078f61fe48
+            />
+            <PrivateRoute
+              permission={"All"}
+              path="/new-report"
+              component={NewReport}
             />
           </Switch>
         </AuthProvider>
