@@ -27,7 +27,7 @@ function App() {
             <PrivateRoute permission={"Host"} path="/new-property" component={NewProperty} />
             <PrivateRoute permission={"All"} path="/update-profile" component={UpdateProfile} />
             <PrivateRoute permission={"All"} path="/profile" component={UserProfile} />
-            <PrivateRoute
+            <PrivateRoute permission={"All"}
               path="/property/:propertyID"
               component={PropertyView}
             />
