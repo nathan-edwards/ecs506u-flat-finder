@@ -45,7 +45,7 @@ export default function ViewReport() {
       setError("Failed to fetch report");
     }
     try {
-      hostData = await fetchHost(report.current.host);
+      hostData = await fetchHost(report.current.user);
       host.current = hostData;
     } catch {
       setError("Failed to fetch host");
@@ -69,7 +69,7 @@ export default function ViewReport() {
           <Card.Text style={{textAlign:"center"}}><h2><strong>{report.current.subject}</strong></h2></Card.Text>
           <Card.Text style={{marginBottom: "0%"}}><strong>Description:</strong></Card.Text>
           <Card.Text style={{marginTop: "0%"}}>{report.current.desc}</Card.Text>
-          <Card.Text><strong>Created By: </strong>{}</Card.Text>
+          <Card.Text><strong>Created By: </strong>{host.current.name}</Card.Text>
           <Card.Text><strong>Date Created: </strong>{report.current.date}</Card.Text>
         </Card.Body>
       </Card>
