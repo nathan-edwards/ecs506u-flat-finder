@@ -1,0 +1,12 @@
+#update_user_profile {
+  background-color: #006400;
+  border: none;
+  font-weight: bolder;
+  font-size: 16pt;
+}
+#user_profile_log_out {
+  color: white;
+  font-size: 15pt;
+  font-weight: bolder;
+  border: none;
+}

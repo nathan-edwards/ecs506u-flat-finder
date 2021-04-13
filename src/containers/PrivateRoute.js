@@ -20,6 +20,7 @@ export default function PrivateRoute({
           currentUser.photoURL === "Admin" &&
           permission === "Admin" ? (
           <div>
+             <Header />
             <Component {...props} />
           </div>
         ) : (currentUser &&
@@ -27,6 +28,7 @@ export default function PrivateRoute({
             permission === "Host") ||
           currentUser.photoURL === "Admin" ? (
           <div>
+             <Header />
             <Component {...props} />
           </div>
         ) : currentUser && permission === "All" ? (

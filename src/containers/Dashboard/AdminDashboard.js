@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Card, Button, Alert, Form, FormControl } from "react-bootstrap";
+import "./AdminDashboard.css";
 import { useAuth } from "../../contexts/AuthContext";
 import { Link, useHistory } from "react-router-dom";
 
@@ -23,53 +24,58 @@ export default function AdminDashboard() {
     <>
       <Card>
         <Card.Body>
-          <h2 className="text-center mb-4">Profile</h2>
+          <h2 id="profile_title" className="text-center mb-4"><b>Profile</b></h2>
           {error && <Alert variant="danger">{error}</Alert>}
-          <p>
-            <strong>Name:</strong> {currentUser.displayName}
+          <p id="admin_name">
+            <strong>Name:</strong> <br></br> {currentUser.displayName}
           </p>
-          <p>
-            <strong>Email:</strong> {currentUser.email}
+          <p id="admin_email">
+            <strong>Email:</strong> <br></br> {currentUser.email}
           </p>
-          <Link to="/update-profile" className="btn btn-primary w-100 mt-3">
+          <p id="admin_user_type">
+            <strong>User Type:</strong> <br></br> {currentUser.photoURL}
+          </p>
+          <Link id="admin_update_profile" to="/update-profile" className="btn btn-primary w-100 mt-3">
             Update Profile
           </Link>
         </Card.Body>
       </Card>
+
       <Card>
         <Card.Body>
-          <h2 className="text-center mb-4">Admin Tools</h2>
-          <Form onSubmit={""} inline className="col-xs-4 mx-auto">
+          <h2 className="text-center mb-4"><b>Admin Tools</b></h2>
+          <Form id="search_user_form" onSubmit={""} inline className="col-xs-4 mx-auto">
             <FormControl
               style={{ width: 575 }}
               type="text"
               placeholder="Search User"
               className="mr-sm-2"
             />
-            <Button variant="light" type="submit">
+            <Button id="search_1" variant="primary" type="submit">
               Search
             </Button>
           </Form>
           <br></br>
-          <Form onSubmit={""} inline className="col-xs-4 mx-auto">
+          <Form id="search_property_form" onSubmit={""} inline className="col-xs-4 mx-auto">
             <FormControl
               style={{ width: 575 }}
               type="text"
               placeholder="Search Property"
               className="mr-sm-2"
             />
-            <Button variant="light" type="submit">
+            <Button id="search_2" variant="primary" type="submit">
               Search
             </Button>
           </Form>
           <br></br>
-          <Button variant="link" href={"/manage-report"}>
+          <Button id="manage_user_reports" variant="primary" onClick={""}>
             Manage User Reports
           </Button>
         </Card.Body>
       </Card>
+
       <div className="w-100 text-center mt-2">
-        <Button variant="link" onClick={handleLogout}>
+        <Button id="admin_log_out" variant="primary" onClick={handleLogout}>
           Log Out
         </Button>
       </div>
