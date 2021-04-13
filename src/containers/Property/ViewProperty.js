@@ -18,6 +18,29 @@ export default function ViewProperty() {
   let property = useRef();
   let host = useRef();
 
+  function titleCase(str) {
+    var splitStr = str.toLowerCase().split(" ");
+    for (var i = 0; i < splitStr.length; i++) {
+      // You do not need to check if i is larger than splitStr length, as your for does that for you
+      // Assign it back to the array
+      splitStr[i] =
+        splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);
+    }
+    // Directly return the joined string
+    return splitStr.join(" ");
+  }
+
+  function handleClick() {
+    const newWindow = window.open(
+      `mailto:${host.current.email}?subject=Contacting about ${titleCase(
+        property.current.address[0]
+      )} Property`,
+      "_blank",
+      "noopener,noreferrer"
+    );
+    if (newWindow) newWindow.opener = null;
+  }
+
   async function fetchProperty(propertyID) {
     let data;
     const propertyRef = firestore.collection("properties").doc(`${propertyID}`);
@@ -53,7 +76,6 @@ export default function ViewProperty() {
       setError("Failed to fetch host");
     }
     setLoading(false);
-    console.log(propertyData)
   }
 
   useEffect(() => {
@@ -72,20 +94,20 @@ export default function ViewProperty() {
           <Col>
             <Row>
               <h1 style={{ fontSize: "26px", padding: "28px 0 12px 0 " }}>
-                {property.current.address[0]}
+                {titleCase(property.current.address[0])}
               </h1>
               <h2 style={{ fontSize: "26px", padding: "28px 0 12px 0 " }}>
-                {property.current.address[0] +
+                {titleCase(property.current.address[0]) +
                   ", " +
-                  property.current.address[1] +
+                  titleCase(property.current.address[1]) +
                   ", " +
-                  property.current.address[2] +
+                  titleCase(property.current.address[2]) +
                   ", " +
-                  property.current.address[3] +
+                  titleCase(property.current.address[3]) +
                   " " +
-                  property.current.address[4] +
+                  titleCase(property.current.address[4]) +
                   ", " +
-                  property.current.address[5]}
+                  titleCase(property.current.address[5])}
               </h2>
             </Row>
             <Row>
@@ -152,7 +174,15 @@ export default function ViewProperty() {
               </Card.Header>
               <Card.Body>
                 Host: {host.current.name}
-                <Button variant="primary">Contact Host</Button>
+                Email: {host.current.email}
+                Phone Number: {host.current.phoneNumber}
+                <Button
+                  onClick={handleClick}
+                  variant="primary"
+                  // target="_blank"
+                >
+                  Contact Host
+                </Button>
               </Card.Body>
             </Card>
           </Col>
