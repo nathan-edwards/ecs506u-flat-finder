@@ -10,6 +10,7 @@ let date = newDate.getDate();
 let month = newDate.getMonth() + 1;
 let year = newDate.getFullYear();
 let separator = "/";
+
 export default function NewProperty() {
   const subjectRef = useRef();
   const descRef = useRef();
@@ -63,7 +64,8 @@ export default function NewProperty() {
                 </Form.Group>
                 <Form.Group id="description">
                   <Form.Label>Description</Form.Label>
-                  <Form.Control type="text" ref={descRef} required />
+                  <br></br>
+                  <Form.Control as="textarea" rows={10} cols={48} ref={descRef} required />
                 </Form.Group>
                 <Button disabled={loading} className="w-100" type="submit">
                   Submit
