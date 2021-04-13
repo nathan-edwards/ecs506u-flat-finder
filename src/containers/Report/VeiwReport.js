@@ -67,10 +67,10 @@ export default function ViewReport() {
       <Card style={{ margin:"auto", width: "50rem", marginTop: "5%" }}>
         <Card.Body>
           <Card.Text style={{textAlign:"center"}}><h2><strong>{report.current.subject}</strong></h2></Card.Text>
-          <Card.Text style={{marginBottom: "0%"}}>Description:</Card.Text>
+          <Card.Text style={{marginBottom: "0%"}}><strong>Description:</strong></Card.Text>
           <Card.Text style={{marginTop: "0%"}}>{report.current.desc}</Card.Text>
-          <Card.Text>Created By: {}</Card.Text>
-          <Card.Text>Date Created: {report.current.date}</Card.Text>
+          <Card.Text><strong>Created By: </strong>{}</Card.Text>
+          <Card.Text><strong>Date Created: </strong>{report.current.date}</Card.Text>
         </Card.Body>
       </Card>
     </>
