@@ -13,6 +13,7 @@ import ViewProperty from "../Property/ViewProperty";
 import EditProperty from "../Property/EditProperty";
 import NewReport from "../Report/NewReport"
 import ManageReport from "../Report/ManageReport"
+import ViewReport from "../Report/VeiwReport"
 import PrivateRoute from "../PrivateRoute";
 
 
@@ -75,6 +76,11 @@ function App() {
               permission={"Admin"}
               path="/manage-report"
               component={ManageReport}
+            />
+            <PrivateRoute
+              permission={"Admin"}
+              exact path="/report/:reportID"
+              component={ViewReport}
             />
           </Switch>
         </AuthProvider>
