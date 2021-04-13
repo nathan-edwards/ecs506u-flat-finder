@@ -1,0 +1,61 @@
+#profile_name {
+  position: relative;
+  left: 8em;
+  top: 2em;
+}
+#display_name {
+  position: relative;
+  left: 6.5em;
+  top: 3em;
+  font-size: 20pt;
+}
+#profile_email {
+  position: relative;
+  left: 29.5em;
+  bottom: 1.9em;
+}
+#display_email {
+  position: relative;
+  left: 24em;
+  bottom: 0.5em;
+  font-size: 20pt;
+}
+#profile_user_type {
+  position: relative;
+  left: 50em;
+  bottom: 5.8em;
+}
+#display_user_type {
+  position: relative;
+  left: 46em;
+  bottom: 4em;
+  font-size: 20pt;
+}
+#update_profile {
+  background-color: #006400;
+  border: none;
+  font-weight: bolder;
+  position: relative;
+  bottom: 1.5em;
+  font-size: 16pt;
+}
+.create_listing {
+  position: relative;
+  left: 30em;
+  background-color: #006400;
+  border: none;
+}
+.update_listing_information {
+  position: relative;
+  left: 48em;
+  background-color: #006400;
+  border: none;
+}
+#log_out {
+  color: white;
+  font-size: 15pt;
+  position: relative;
+  top: 10px;
+  font-weight: bolder;
+  border: none;
+}
