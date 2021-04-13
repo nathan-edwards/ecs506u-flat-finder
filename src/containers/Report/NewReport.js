@@ -5,9 +5,13 @@ import { v4 as uuidv4 } from "uuid";
 import { useAuth } from "../../contexts/AuthContext";
 
 import { firestore } from "../../firebase";
-
+let newDate = new Date();
+let date = newDate.getDate();
+let month = newDate.getMonth() + 1;
+let year = newDate.getFullYear();
+let separator = "/";
 export default function NewProperty() {
-  const addressRef = useRef();
+  const subjectRef = useRef();
   const descRef = useRef();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -32,9 +36,10 @@ export default function NewProperty() {
     setLoading(true);
     addReport({
       id: uuidv4(),
-      name: addressRef.current.value,
+      subject: subjectRef.current.value,
       desc: descRef.current.value,
       user: currentUser.uid,
+      date: `${year}${separator}${month<10?`0${month}`:`${month}`}${separator}${date}`,
     });
     history.push("/");
     setLoading(false);
@@ -54,7 +59,7 @@ export default function NewProperty() {
               <Form onSubmit={handleSubmit}>
                 <Form.Group id="display-name">
                   <Form.Label>Subject</Form.Label>
-                  <Form.Control type="text" ref={addressRef} required />
+                  <Form.Control type="text" ref={subjectRef} required />
                 </Form.Group>
                 <Form.Group id="description">
                   <Form.Label>Description</Form.Label>
