@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import {
   Navbar,
-  Nav,
+  // Nav,
   Form,
   FormControl,
   Button,
@@ -22,7 +22,12 @@ function Header() {
   function handleSubmit(e) {
     e.preventDefault();
     setLoading(true);
-    history.push("/?location=" + locationRef.current.value);
+    if (locationRef.current.value !== "") {
+      history.push("/?location=" + locationRef.current.value);
+      window.location.reload(false);
+    } else {
+      history.push("/");
+    }
     setLoading(false);
   }
 
@@ -49,14 +54,14 @@ function Header() {
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="col-xs-4">
+          {/* <Nav className="col-xs-4">
             <Nav.Link style={{ color: "#8c97ab" }} href="/?type=rent">
               Rent
             </Nav.Link>
             <Nav.Link style={{ color: "#8c97ab" }} href="/?type=flatshare">
               Flat Share
             </Nav.Link>
-          </Nav>
+          </Nav> */}
           <Form onSubmit={handleSubmit} inline className="col-xs-4 mx-auto">
             <FormControl
               style={{ width: 575 }}

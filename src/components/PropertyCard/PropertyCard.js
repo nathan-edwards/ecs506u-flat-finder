@@ -12,7 +12,7 @@ export default function PropertyCard(props) {
       <Card style={{ width: "18rem", marginTop: "5%" }}>
         <Card.Img variant="top" src={property.photo} />
         <Card.Body>
-          <Card.Title>{property.name}</Card.Title>
+          <Card.Title>{property.address[0]}</Card.Title>
           <Card.Text>{property.desc}</Card.Text>
           <Card.Text>
             <BiBed /> {property.bedrooms} <BiBath /> {property.bathrooms}
@@ -38,7 +38,7 @@ export function PropertyCardEdit(props) {
       <Card style={{ width: "18rem", marginTop: "5%" }}>
         <Card.Img variant="top" src={property.photo} />
         <Card.Body>
-          <Card.Title>{property.name}</Card.Title>
+          <Card.Title>{property.address[0]}</Card.Title>
           <Card.Text>
             <BiBed /> {property.bedrooms} <BiBath /> {property.bathrooms}
           </Card.Text>

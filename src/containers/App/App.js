@@ -54,7 +54,7 @@ function App() {
               component={NewProperty}
             />
             <PrivateRoute
-              permission={"Host"}
+              permission={"All"}
               exact path="/property/:propertyID"
               component={ViewProperty}
             />

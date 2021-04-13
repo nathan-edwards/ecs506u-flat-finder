@@ -71,8 +71,21 @@ export default function ViewProperty() {
           <Col>
             <Row>
               <h1 style={{ fontSize: "26px", padding: "28px 0 12px 0 " }}>
-                {property.current.name}
+                {property.current.address[0]}
               </h1>
+              <h2 style={{ fontSize: "26px", padding: "28px 0 12px 0 " }}>
+                {property.current.address[0] +
+                  ", " +
+                  property.current.address[1] +
+                  ", " +
+                  property.current.address[2] +
+                  ", " +
+                  property.current.address[3] +
+                  " " +
+                  property.current.address[4] +
+                  ", " +
+                  property.current.address[5]}
+              </h2>
             </Row>
             <Row>
               <Gallery>

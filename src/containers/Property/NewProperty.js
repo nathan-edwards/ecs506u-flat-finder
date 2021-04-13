@@ -7,12 +7,17 @@ import { useAuth } from "../../contexts/AuthContext";
 import { firestore, storage } from "../../firebase";
 
 export default function NewProperty() {
-  const addressRef = useRef();
+  const addressLine1Ref = useRef();
+  const addressLine2Ref = useRef();
+  const cityRef = useRef();
+  const postcodeRef = useRef();
+  const countryRef = useRef();
   const descRef = useRef();
   const bedRef = useRef();
   const bathRef = useRef();
   const rentRef = useRef();
   const propTypeRef = useRef();
+  const furnishTypeRef = useRef();
   const photoRef = useRef();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -43,15 +48,30 @@ export default function NewProperty() {
     e.preventDefault();
 
     setLoading(true);
+    let postcodes = postcodeRef.current.value.toLowerCase().split(" ");
+    if (addressLine2Ref.current.value === null) {
+      addressLine2Ref.current = "n/a";
+    }
+    if (photoRef.current.value === null) {
+      photoRef.current = "n/a";
+    }
     addProperty({
       id: uuidv4(),
-      name: addressRef.current.value,
+      address: [
+        addressLine1Ref.current.value.toLowerCase(),
+        addressLine2Ref.current.value.toLowerCase(),
+        cityRef.current.value.toLowerCase(),
+        postcodes[0],
+        postcodes[1],
+        countryRef.current.value.toLowerCase(),
+      ],
       desc: descRef.current.value,
       bedrooms: bedRef.current.value,
       bathrooms: bathRef.current.value,
       rentMonth: rentRef.current.value,
       rentWeek: Math.ceil(((rentRef.current.value * 12) / 365.25) * 7),
       propertyType: propTypeRef.current.value,
+      furnishType: furnishTypeRef.current.value,
       photo: photoUrl,
       host: currentUser.uid,
     });
@@ -71,9 +91,25 @@ export default function NewProperty() {
               <h2 className="text-center mb-4">New Property</h2>
               {error && <Alert variant="danger">{error}</Alert>}
               <Form onSubmit={handleSubmit}>
-                <Form.Group id="display-name">
-                  <Form.Label>Address</Form.Label>
-                  <Form.Control type="text" ref={addressRef} required />
+                <Form.Group id="address">
+                  <Form.Label>Address Line 1</Form.Label>
+                  <Form.Control type="text" ref={addressLine1Ref} required />
+                </Form.Group>
+                <Form.Group id="address">
+                  <Form.Label>Address Line 2</Form.Label>
+                  <Form.Control type="text" ref={addressLine2Ref} />
+                </Form.Group>
+                <Form.Group id="address">
+                  <Form.Label>City</Form.Label>
+                  <Form.Control type="text" ref={cityRef} required />
+                </Form.Group>
+                <Form.Group id="address">
+                  <Form.Label>Postcode/Zipcode</Form.Label>
+                  <Form.Control type="text" ref={postcodeRef} required />
+                </Form.Group>
+                <Form.Group id="address">
+                  <Form.Label>Country</Form.Label>
+                  <Form.Control type="text" ref={countryRef} required />
                 </Form.Group>
                 <Form.Group id="description">
                   <Form.Label>Description</Form.Label>
@@ -110,6 +146,14 @@ export default function NewProperty() {
                   <Form.Control as="select" ref={propTypeRef} required>
                     <option>Rent</option>
                     <option>Flat Share</option>
+                  </Form.Control>
+                </Form.Group>
+                <Form.Group>
+                  <Form.Label>Furnished Type</Form.Label>
+                  <Form.Control as="select" ref={furnishTypeRef} required>
+                    <option>Furnished</option>
+                    <option>Semi Furnished</option>
+                    <option>Unfurnished</option>
                   </Form.Control>
                 </Form.Group>
                 <Form.Group>

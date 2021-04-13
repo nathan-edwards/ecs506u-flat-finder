@@ -8,22 +8,27 @@ import Loader from "react-loaders";
 import { firestore, storage } from "../../firebase";
 
 export default function EditProperty() {
-  const addressRef = useRef();
+  const addressLine1Ref = useRef();
+  const addressLine2Ref = useRef();
+  const cityRef = useRef();
+  const postcodeRef = useRef();
+  const countryRef = useRef();
   const descRef = useRef();
   const bedRef = useRef();
   const bathRef = useRef();
   const rentRef = useRef();
   const propTypeRef = useRef();
+  const furnishTypeRef = useRef();
   const photoRef = useRef();
   const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [photoUrl, setPhotoUrl] = useState(null);
   const { currentUser } = useAuth();
   const history = useHistory();
   const { propertyID } = useParams();
   let property = useRef();
 
-  const ref = firestore.collection("properties");
+  const editRef = firestore.collection("properties");
 
   async function fetchProperty(propertyID) {
     let data;
@@ -46,6 +51,15 @@ export default function EditProperty() {
     setLoading(false);
   }
 
+  function editProperty(submission) {
+    editRef
+      .doc(submission.id)
+      .set(submission)
+      .catch((err) => {
+        setError(err);
+      });
+  }
+
   useEffect(() => {
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -53,15 +67,6 @@ export default function EditProperty() {
 
   if (loading) {
     return <Loader type="ball-pulse" />;
-  }
-
-  function editProperty(submission) {
-    ref
-      .doc(submission.id)
-      .set(submission)
-      .catch((err) => {
-        setError(err);
-      });
   }
 
   async function onFileChange(e) {
@@ -76,15 +81,24 @@ export default function EditProperty() {
     e.preventDefault();
 
     setLoading(true);
+    let postcodes = cityRef.current.value.toLowerCase().split();
     editProperty({
       id: uuidv4(),
-      name: addressRef.current.value,
+      address: [
+        addressLine1Ref.current.value.toLowerCase(),
+        addressLine2Ref.current.value.toLowerCase(),
+        cityRef.current.value.toLowerCase(),
+        postcodes[0],
+        postcodes[1],
+        countryRef.current.value.toLowerCase(),
+      ],
       desc: descRef.current.value,
       bedrooms: bedRef.current.value,
       bathrooms: bathRef.current.value,
       rentMonth: rentRef.current.value,
       rentWeek: Math.ceil(((rentRef.current.value * 12) / 365.25) * 7),
       propertyType: propTypeRef.current.value,
+      furnishType: furnishTypeRef.current.value,
       photo: photoUrl,
       host: currentUser.uid,
     });
@@ -104,13 +118,49 @@ export default function EditProperty() {
               <h2 className="text-center mb-4">Edit Property</h2>
               {error && <Alert variant="danger">{error}</Alert>}
               <Form onSubmit={handleSubmit}>
-                <Form.Group id="display-name">
-                  <Form.Label>Address</Form.Label>
+                <Form.Group id="address">
+                  <Form.Label>Address Line 1</Form.Label>
                   <Form.Control
                     type="text"
-                    ref={addressRef}
+                    ref={addressLine1Ref}
                     required
-                    placeholder={property.current.name}
+                    placeholder={property.current.address[0]}
+                  />
+                </Form.Group>
+                <Form.Group id="address">
+                  <Form.Label>Address Line 2</Form.Label>
+                  <Form.Control
+                    type="text"
+                    ref={addressLine2Ref}
+                    required
+                    placeholder={property.current.address[1]}
+                  />
+                </Form.Group>
+                <Form.Group id="address">
+                  <Form.Label>City</Form.Label>
+                  <Form.Control
+                    type="text"
+                    ref={cityRef}
+                    required
+                    placeholder={property.current.address[2]}
+                  />
+                </Form.Group>
+                <Form.Group id="address">
+                  <Form.Label>Postcode/Zipcode</Form.Label>
+                  <Form.Control
+                    type="text"
+                    ref={postcodeRef}
+                    required
+                    placeholder={property.current.address[3] + " " + property.current.address[4]}
+                  />
+                </Form.Group>
+                <Form.Group id="address">
+                  <Form.Label>Country</Form.Label>
+                  <Form.Control
+                    type="text"
+                    ref={countryRef}
+                    required
+                    placeholder={property.current.address[5]}
                   />
                 </Form.Group>
                 <Form.Group id="description">
