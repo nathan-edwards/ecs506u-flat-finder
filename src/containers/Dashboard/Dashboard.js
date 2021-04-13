@@ -19,9 +19,10 @@ import PropertyCard from "../../components/PropertyCard/PropertyCard";
 export default function Dashboard() {
   const [loading, setLoading] = useState(true);
   const [properties, setProperties] = useState();
+  const [propertyTypeFilter, setPropertyTypeFilter] = useState("");
   const [bathFilter, setBathFilter] = useState("0");
   const [bedFilter, setBedFilter] = useState("0");
-  const [priceFilter, setPriceFilter] = useState("");
+  const [priceFilter, setPriceFilter] = useState("Select a Price");
   const [furnishFilter, setFurnishFilter] = useState("");
   const bedbath = [
     { name: "1", value: "1" },
@@ -29,21 +30,24 @@ export default function Dashboard() {
     { name: "3", value: "3" },
     { name: "4+", value: "4+" },
   ];
-
-  const priceArray = [];
+  const priceArray = [
+    1000,
+    2000,
+    3000,
+    4000,
+    5000,
+    6000,
+    7000,
+    8000,
+    9000,
+    10000,
+  ];
 
   let ref = firestore.collection("properties");
   let query = useQuery();
 
   function useQuery() {
     return new URLSearchParams(useLocation().search);
-  }
-
-  function priceArrayGen() {
-    let i;
-    for (i = 1000; i < 41000; i = i + 1000) {
-      priceArray.push(i);
-    }
   }
 
   function getProperties() {
@@ -63,40 +67,24 @@ export default function Dashboard() {
   }
 
   function applyFilters() {
-    if (furnishFilter !== "" && bedFilter !== "0" && bathFilter !== "0") {
-      ref = ref
-        .where("furnishType", "==", furnishFilter)
-        .where("bedrooms", "==", bedFilter)
-        .where("bathrooms", "==", bathFilter);
+    if (propertyTypeFilter !== "") {
+      ref = ref.where("propertyType", "==", propertyTypeFilter);
     }
-    if (furnishFilter !== "" && bedFilter !== "0") {
-      ref = ref
-        .where("bedrooms", "==", bedFilter)
-        .where("furnishType", "==", furnishFilter);
-    }
-    if (furnishFilter !== "" && bathFilter !== "0") {
-      ref = ref
-        .where("bathrooms", "==", bathFilter)
-        .where("furnishType", "==", furnishFilter);
-    }
-    if (bathFilter !== "" && bedFilter !== "0") {
-      ref = ref
-        .where("bedrooms", "==", bedFilter)
-        .where("bathrooms", "==", bathFilter);
-    }
-    if (furnishFilter !== "") {
-      ref = ref.where("furnishType", "==", furnishFilter);
-    }
-    if (bathFilter !== "0") {
-      ref = ref.where("bathrooms", "==", bathFilter);
+    if (priceFilter !== "Select a Price") {
+      ref = ref.where("rentMonth", "<=", priceFilter);
     }
     if (bedFilter !== "0") {
       ref = ref.where("bedrooms", "==", bedFilter);
     }
+    if (bathFilter !== "0") {
+      ref = ref.where("bathrooms", "==", bathFilter);
+    }
+    if (furnishFilter !== "") {
+      ref = ref.where("furnishType", "==", furnishFilter);
+    }
   }
 
   useEffect(() => {
-    priceArrayGen();
     getProperties();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -108,25 +96,86 @@ export default function Dashboard() {
   return (
     <>
       <div className="propertyGrid">
-        <Container>
+        <Container fluid>
           <Row>
-            <Col>
+            <Col xs={4} md={3} style={{position: "sticky", marginRight: 50, height: "100%"}}>
               <Form>
+                <p>Property Type</p>
+                <ButtonGroup toggle>
+                  <ToggleButton
+                    type="radio"
+                    variant="primary"
+                    value=""
+                    checked={propertyTypeFilter === ""}
+                    onChange={(e) =>
+                      setPropertyTypeFilter(e.currentTarget.value)
+                    }
+                  >
+                    Any
+                  </ToggleButton>
+                  <ToggleButton
+                    type="radio"
+                    variant="primary"
+                    value="Flat"
+                    checked={propertyTypeFilter === "Flat"}
+                    onChange={(e) =>
+                      setPropertyTypeFilter(e.currentTarget.value)
+                    }
+                  >
+                    Flat
+                  </ToggleButton>
+                  <ToggleButton
+                    type="radio"
+                    variant="primary"
+                    value="House"
+                    checked={propertyTypeFilter === "House"}
+                    onChange={(e) =>
+                      setPropertyTypeFilter(e.currentTarget.value)
+                    }
+                  >
+                    House
+                  </ToggleButton>
+                  <ToggleButton
+                    type="radio"
+                    variant="primary"
+                    value="Flat Share"
+                    checked={propertyTypeFilter === "Flat Share"}
+                    onChange={(e) =>
+                      setPropertyTypeFilter(e.currentTarget.value)
+                    }
+                  >
+                    Flat Share
+                  </ToggleButton>
+                </ButtonGroup>
                 <Form.Group>
                   <Form.Label>Max Monthly</Form.Label>
                   <Form.Control
                     as="select"
-                    onChange={(g) => setPriceFilter(g.currentTarget.value)}
+                    value={priceFilter}
+                    onChange={(g) =>
+                      setPriceFilter(
+                        parseInt(g.currentTarget.value.replace("£", ""))
+                      )
+                    }
                     required
                   >
                     <option>Select a Price</option>
-                    {priceArray.map((price) => (
-                      <option key={price}>{price}</option>
+                    {priceArray.map((price, idx) => (
+                      <option key={idx}>£{price}</option>
                     ))}
                   </Form.Control>
                 </Form.Group>
                 <p>Bedrooms</p>
                 <ButtonGroup toggle>
+                  <ToggleButton
+                    type="radio"
+                    variant="primary"
+                    value="0"
+                    checked={bedFilter === "0"}
+                    onChange={(g) => setBedFilter(g.currentTarget.value)}
+                  >
+                    Any
+                  </ToggleButton>
                   {bedbath.map((bed, idx) => (
                     <ToggleButton
                       key={idx}
@@ -142,6 +191,15 @@ export default function Dashboard() {
                 </ButtonGroup>
                 <p>Bathroom</p>
                 <ButtonGroup toggle>
+                  <ToggleButton
+                    type="radio"
+                    variant="primary"
+                    value="0"
+                    checked={bathFilter === "0"}
+                    onChange={(f) => setBathFilter(f.currentTarget.value)}
+                  >
+                    Any
+                  </ToggleButton>
                   {bedbath.map((bath, idx) => (
                     <ToggleButton
                       key={idx}
@@ -160,20 +218,20 @@ export default function Dashboard() {
                   <ToggleButton
                     type="radio"
                     variant="primary"
+                    value=""
+                    checked={furnishFilter === ""}
+                    onChange={(e) => setFurnishFilter(e.currentTarget.value)}
+                  >
+                    Any
+                  </ToggleButton>
+                  <ToggleButton
+                    type="radio"
+                    variant="primary"
                     value="Furnished"
                     checked={furnishFilter === "Furnished"}
                     onChange={(e) => setFurnishFilter(e.currentTarget.value)}
                   >
                     Furnished
-                  </ToggleButton>
-                  <ToggleButton
-                    type="radio"
-                    variant="primary"
-                    value="Semi Furnished"
-                    checked={furnishFilter === "Semi Furnished"}
-                    onChange={(e) => setFurnishFilter(e.currentTarget.value)}
-                  >
-                    Semi Furnished
                   </ToggleButton>
                   <ToggleButton
                     type="radio"
@@ -190,7 +248,7 @@ export default function Dashboard() {
                 </Button>
               </Form>
             </Col>
-            <Col>
+            <Col xs={12} md={8} >
               <CardDeck>
                 {properties.map((property) => (
                   <div key={property.id}>

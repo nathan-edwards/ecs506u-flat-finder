@@ -68,7 +68,7 @@ export default function NewProperty() {
       desc: descRef.current.value,
       bedrooms: bedRef.current.value,
       bathrooms: bathRef.current.value,
-      rentMonth: rentRef.current.value,
+      rentMonth: parseInt(rentRef.current.value),
       rentWeek: Math.ceil(((rentRef.current.value * 12) / 365.25) * 7),
       propertyType: propTypeRef.current.value,
       furnishType: furnishTypeRef.current.value,

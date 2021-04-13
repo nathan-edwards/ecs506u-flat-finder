@@ -53,6 +53,7 @@ export default function ViewProperty() {
       setError("Failed to fetch host");
     }
     setLoading(false);
+    console.log(propertyData)
   }
 
   useEffect(() => {
