@@ -80,6 +80,7 @@ function Header() {
             id="nav-dropdown"
           >
             <NavDropdown.Item href="/profile">Profile</NavDropdown.Item>
+            <NavDropdown.Item href="/new-report">Report Problem</NavDropdown.Item>
             <NavDropdown.Item href="#" onClick={handleLogout}>
               Logout
             </NavDropdown.Item>
