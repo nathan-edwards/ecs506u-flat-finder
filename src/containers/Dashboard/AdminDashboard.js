@@ -68,7 +68,7 @@ export default function AdminDashboard() {
             </Button>
           </Form>
           <br></br>
-          <Button id="manage_user_reports" variant="primary" onClick={""}>
+          <Button id="manage_user_reports" href={"/manage-report"}>
             Manage User Reports
           </Button>
         </Card.Body>
