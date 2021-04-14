@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { CardDeck } from "react-bootstrap";
+import { CardDeck, Row, Col, Button } from "react-bootstrap";
 import { PropertyCardEdit } from "../../components/PropertyCard/PropertyCard";
 import Loader from "react-loaders";
 import { firestore } from "../../firebase";
@@ -34,13 +34,24 @@ export default function HostDashboard() {
   return (
     <>
       <div className="propertyGrid">
-        <CardDeck>
-          {properties.map((property) => (
-            <div key={property.id}>
-              <PropertyCardEdit property={property} />
-            </div>
-          ))}
-        </CardDeck>
+        <Row>
+          <Col>
+            <h2>Host Tools</h2>
+            <h3>Hello {currentUser.displayName}</h3>
+            <Button href="/profile/update">Update Profile</Button>
+            <Button href="/profile/update">New Property</Button>
+          </Col>
+          <Col>
+            <h2>Properties</h2>
+            <CardDeck>
+              {properties.map((property) => (
+                <div key={property.id}>
+                  <PropertyCardEdit property={property} />
+                </div>
+              ))}
+            </CardDeck>
+          </Col>
+        </Row>
       </div>
     </>
   );
