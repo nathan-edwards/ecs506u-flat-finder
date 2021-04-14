@@ -1,5 +1,14 @@
 import React, { useRef, useState, useEffect } from "react";
-import { Form, Button, Card, Alert, Container, Col } from "react-bootstrap";
+import {
+  Form,
+  Button,
+  Card,
+  Alert,
+  Container,
+  Col,
+  Row,
+  Modal,
+} from "react-bootstrap";
 import { useHistory, useParams } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import { useAuth } from "../../contexts/AuthContext";
@@ -23,6 +32,9 @@ export default function EditProperty() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
   const [photoUrl, setPhotoUrl] = useState(null);
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
   const { currentUser } = useAuth();
   const history = useHistory();
   const { propertyID } = useParams();
@@ -58,6 +70,18 @@ export default function EditProperty() {
       .catch((err) => {
         setError(err);
       });
+    history.push("/host");
+  }
+
+  function removeProperty() {
+    handleClose();
+    editRef
+      .doc(`${propertyID}`)
+      .delete()
+      .catch((err) => {
+        setError(err);
+      });
+    history.push("/host");
   }
 
   useEffect(() => {
@@ -113,6 +137,22 @@ export default function EditProperty() {
         style={{ minHeight: "100vh" }}
       >
         <div className="w-100" style={{ maxWidth: "400px" }}>
+          <Modal show={show} onHide={handleClose}>
+            <Modal.Header closeButton>
+              <Modal.Title>Warning Property Deletion</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              Are you sure you want to delete this property?
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={handleClose}>
+                Cancel
+              </Button>
+              <Button variant="primary" onClick={removeProperty}>
+                Confirm Deletion
+              </Button>
+            </Modal.Footer>
+          </Modal>
           <Card>
             <Card.Body>
               <h2 className="text-center mb-4">Edit Property</h2>
@@ -151,7 +191,11 @@ export default function EditProperty() {
                     type="text"
                     ref={postcodeRef}
                     required
-                    placeholder={property.current.address[3] + " " + property.current.address[4]}
+                    placeholder={
+                      property.current.address[3] +
+                      " " +
+                      property.current.address[4]
+                    }
                   />
                 </Form.Group>
                 <Form.Group id="address">
@@ -234,9 +278,23 @@ export default function EditProperty() {
                     required
                   />
                 </Form.Group>
-                <Button disabled={loading} className="w-100" type="submit">
-                  Submit
-                </Button>
+                <Row>
+                  <Col>
+                    <Button
+                      disabled={loading}
+                      className="w-100"
+                      variant="danger"
+                      onClick={handleShow}
+                    >
+                      Delete
+                    </Button>
+                  </Col>
+                  <Col>
+                    <Button disabled={loading} className="w-100" type="submit">
+                      Submit
+                    </Button>
+                  </Col>
+                </Row>
               </Form>
             </Card.Body>
           </Card>

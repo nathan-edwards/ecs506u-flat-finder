@@ -79,7 +79,13 @@ function Header() {
             title={currentUser.displayName}
             id="nav-dropdown"
           >
-            <NavDropdown.Item href="/profile">Profile</NavDropdown.Item>
+            { currentUser.photoURL === "Admin" ? (
+              <NavDropdown.Item href="/admin">Admin Dashboard</NavDropdown.Item>
+            ) : currentUser.photoURL === "Host" ? (
+              <NavDropdown.Item href="/host">Host Dashboard</NavDropdown.Item>
+            ) : (
+              <NavDropdown.Item href="/profile">Profile</NavDropdown.Item>
+            )} 
             <NavDropdown.Item href="/new-report">Report Problem</NavDropdown.Item>
             <NavDropdown.Item href="#" onClick={handleLogout}>
               Logout
