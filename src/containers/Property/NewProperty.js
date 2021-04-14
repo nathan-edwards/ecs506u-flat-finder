@@ -145,6 +145,7 @@ export default function NewProperty() {
                   <Form.Label>Property Type</Form.Label>
                   <Form.Control as="select" ref={propTypeRef} required>
                     <option>Rent</option>
+                    <option>House</option>
                     <option>Flat Share</option>
                   </Form.Control>
                 </Form.Group>
@@ -152,7 +153,6 @@ export default function NewProperty() {
                   <Form.Label>Furnished Type</Form.Label>
                   <Form.Control as="select" ref={furnishTypeRef} required>
                     <option>Furnished</option>
-                    <option>Semi Furnished</option>
                     <option>Unfurnished</option>
                   </Form.Control>
                 </Form.Group>
