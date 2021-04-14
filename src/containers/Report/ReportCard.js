@@ -12,7 +12,6 @@ export default function ReportCard(props) {
       const userRef = firestore.collection("users").doc(`${user}`)
       await userRef.get().then((doc) => {
           data = doc.data();
-          console.log(data.name)
       });
       return data.name;
   }
@@ -26,7 +25,6 @@ export default function ReportCard(props) {
       <Card style={{ width: "16rem", marginTop: "5%" }}>
         <Card.Body>
           <Card.Text><strong>Subject: {report.subject}</strong></Card.Text>
-          <Card.Text>Created By: {}</Card.Text>
           <Card.Text>Date Created: {report.date}</Card.Text>
           <a href={link} className="btn btn-primary stretched-link">
             {" "}
