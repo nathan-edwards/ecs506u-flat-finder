@@ -1,7 +1,6 @@
 import React, { useRef, useState } from "react";
 import {
   Navbar,
-  // Nav,
   Form,
   FormControl,
   Button,
@@ -9,7 +8,6 @@ import {
 } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
-import "./Header.css";
 
 function Header() {
   // eslint-disable-next-line
@@ -43,34 +41,54 @@ function Header() {
 
   return (
     <header>
+      <style type="text/css">
+        {`
+        a {
+          color: #fff
+        }
+        a:hover {
+          color: #4DB790
+        }
+        .nav-link:focus, .nav-link:hover {
+          color: #4DB790
+        }
+        `}
+      </style>
       <Navbar style={{ backgroundColor: "#1c212d" }} variant="dark" expand="lg">
         <Navbar.Brand href="/">
           <div>
             <span style={{ fontWeight: 400, font: "Roboto" }}>my</span>
-            <span style={{ color: "#30d69a", fontWeight: 700, font: "Roboto" }}>
+            <span style={{ color: "#4DB790", fontWeight: 700, font: "Roboto" }}>
               Place
             </span>
           </div>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          {/* <Nav className="col-xs-4">
-            <Nav.Link style={{ color: "#8c97ab" }} href="/?type=rent">
-              Rent
-            </Nav.Link>
-            <Nav.Link style={{ color: "#8c97ab" }} href="/?type=flatshare">
-              Flat Share
-            </Nav.Link>
-          </Nav> */}
           <Form onSubmit={handleSubmit} inline className="col-xs-4 mx-auto">
             <FormControl
-              style={{ width: 575 }}
+              style={{
+                width: 575,
+                backgroundColor: "#333742",
+                borderColor: "#cccccc",
+                color: "#cccccc",
+                textShadow: "#cccccc",
+              }}
               type="text"
               placeholder="Enter Location"
               className="mr-sm-2"
               ref={locationRef}
             />
-            <Button variant="light" disabled={loading} type="submit">
+            <Button
+              variant="light"
+              disabled={loading}
+              type="submit"
+              style={{
+                backgroundColor: "#333742",
+                color: "#a2a2a2",
+                borderColor: "#a2a2a2",
+              }}
+            >
               Search
             </Button>
           </Form>
@@ -79,14 +97,16 @@ function Header() {
             title={currentUser.displayName}
             id="nav-dropdown"
           >
-            { currentUser.photoURL === "Admin" ? (
+            {currentUser.photoURL === "Admin" ? (
               <NavDropdown.Item href="/admin">Admin Dashboard</NavDropdown.Item>
             ) : currentUser.photoURL === "Host" ? (
               <NavDropdown.Item href="/host">Host Dashboard</NavDropdown.Item>
             ) : (
               <NavDropdown.Item href="/profile">Profile</NavDropdown.Item>
-            )} 
-            <NavDropdown.Item href="/new-report">Report Problem</NavDropdown.Item>
+            )}
+            <NavDropdown.Item href="/new-report">
+              Report Problem
+            </NavDropdown.Item>
             <NavDropdown.Item href="#" onClick={handleLogout}>
               Logout
             </NavDropdown.Item>

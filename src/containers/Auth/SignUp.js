@@ -29,7 +29,6 @@ export default function SignUp() {
   }
 
   async function submitUserInfo() {
-    await user.updateProfile({ displayName: displayNameRef.current.value, photoURL: userTypeRef.current.value });
     addUserInfo({
       id: user.uid,
       name: user.displayName,
@@ -38,6 +37,14 @@ export default function SignUp() {
       phoneNumber: phoneRef.current.value,
       userType: userTypeRef.current.value,
     });
+    try {
+      await user.updateProfile({
+        displayName: displayNameRef.current.value,
+        photoURL: userTypeRef.current.value,
+      });
+    } catch {
+      setError("Failed to create an account");
+    }
   }
 
   async function handleSubmit(e) {
@@ -51,7 +58,11 @@ export default function SignUp() {
       setError("");
       setLoading(true);
       await signup(emailRef.current.value, passwordRef.current.value);
-      await submitUserInfo();
+      try {
+        await submitUserInfo();
+      } catch {
+        setError("Failed to create an account");
+      }
       history.push("/");
     } catch {
       setError("Failed to create an account");
@@ -81,7 +92,7 @@ export default function SignUp() {
                 </Form.Group>
                 <Form.Group id="user-type">
                   <Form.Label>User Type</Form.Label>
-                  <Form.Control as="select" ref={userTypeRef} required>
+                  <Form.Control custom as="select" ref={userTypeRef} required>
                     <option>Guest</option>
                     <option>Host</option>
                   </Form.Control>
@@ -102,14 +113,22 @@ export default function SignUp() {
                     required
                   />
                 </Form.Group>
-                <Button disabled={loading} className="w-100" type="submit">
+                <Button
+                  disabled={loading}
+                  className="w-100"
+                  type="submit"
+                  style={{ backgroundColor: "#4DB790", borderColor: "#4DB790" }}
+                >
                   Sign Up
                 </Button>
               </Form>
             </Card.Body>
           </Card>
           <div className="w-100 text-center mt-2">
-            Already have an account? <Link to="/login">Log In</Link>
+            Already have an account?{" "}
+            <Link style={{ color: "#4DB790" }} to="/login">
+              Log In
+            </Link>
           </div>
         </div>
       </Container>

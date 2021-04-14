@@ -83,10 +83,9 @@ export default function NewProperty() {
     <>
       <Container
         className="d-flex align-items-center justify-content-center"
-        style={{ minHeight: "100vh" }}
       >
-        <div className="w-100" style={{ maxWidth: "400px" }}>
-          <Card>
+        <div className="w-100" style={{ maxWidth: "500px" }}>
+          <Card style={{borderColor: "transparent"}}>
             <Card.Body>
               <h2 className="text-center mb-4">New Property</h2>
               {error && <Alert variant="danger">{error}</Alert>}
@@ -164,7 +163,7 @@ export default function NewProperty() {
                     required
                   />
                 </Form.Group>
-                <Button disabled={loading} className="w-100" type="submit">
+                <Button disabled={loading} className="w-100" type="submit" style={{backgroundColor: "#4DB790", borderColor: "#4DB790"}}>
                   Submit
                 </Button>
               </Form>

@@ -13,6 +13,7 @@ import { useLocation } from "react-router-dom";
 import Loader from "react-loaders";
 
 import "../../styles/style.css";
+import "./Dashboard.css";
 import { firestore } from "../../firebase";
 import PropertyCard from "../../components/PropertyCard/PropertyCard";
 
@@ -61,6 +62,7 @@ export default function Dashboard() {
     applyFilters();
     ref.get().then((item) => {
       const items = item.docs.map((doc) => doc.data());
+      console.log(items);
       setProperties(items);
       setLoading(false);
     });
@@ -95,160 +97,214 @@ export default function Dashboard() {
 
   return (
     <>
-      <div className="propertyGrid">
+      <style type="text/css">
+        {`
+    .btn-outline-primary {
+      border-color: #4DB790;
+      color: #4DB790;
+      font-weight: 500;
+    }
+
+    .btn-outline-primary:not(:disabled):not(.disabled).active {
+      background-color: #4DB790;
+      border-color: #4DB790;
+      font-weight: 500;
+    }
+
+    .btn-outline-primary:not(:disabled):not(.disabled).active, .btn-outline-primary:not(:disabled):not(.disabled):active, .show > .btn-outline-primary.dropdown-toggle {
+      background-color: #4DB790;
+      border-color: #4DB790;
+      font-weight: 500;
+    }
+    
+    .btn-outline-primary:hover {
+      background-color: #4DB790;
+      border-color: #4DB790;
+      font-weight: 500;
+    }
+    `}
+      </style>
+      <div className="propertyGrid body">
         <Container fluid>
           <Row>
-            <Col xs={4} md={3} style={{position: "sticky", marginRight: 50, height: "100%"}}>
+            <Col
+              xs={4}
+              md={3}
+              style={{ position: "sticky", marginRight: 50, height: "100%" }}
+            >
               <Form>
-                <p>Property Type</p>
-                <ButtonGroup toggle>
-                  <ToggleButton
-                    type="radio"
-                    variant="primary"
-                    value=""
-                    checked={propertyTypeFilter === ""}
-                    onChange={(e) =>
-                      setPropertyTypeFilter(e.currentTarget.value)
-                    }
-                  >
-                    Any
-                  </ToggleButton>
-                  <ToggleButton
-                    type="radio"
-                    variant="primary"
-                    value="Flat"
-                    checked={propertyTypeFilter === "Flat"}
-                    onChange={(e) =>
-                      setPropertyTypeFilter(e.currentTarget.value)
-                    }
-                  >
-                    Flat
-                  </ToggleButton>
-                  <ToggleButton
-                    type="radio"
-                    variant="primary"
-                    value="House"
-                    checked={propertyTypeFilter === "House"}
-                    onChange={(e) =>
-                      setPropertyTypeFilter(e.currentTarget.value)
-                    }
-                  >
-                    House
-                  </ToggleButton>
-                  <ToggleButton
-                    type="radio"
-                    variant="primary"
-                    value="Flat Share"
-                    checked={propertyTypeFilter === "Flat Share"}
-                    onChange={(e) =>
-                      setPropertyTypeFilter(e.currentTarget.value)
-                    }
-                  >
-                    Flat Share
-                  </ToggleButton>
-                </ButtonGroup>
-                <Form.Group>
-                  <Form.Label>Max Monthly</Form.Label>
-                  <Form.Control
-                    as="select"
-                    value={priceFilter}
-                    onChange={(g) =>
-                      setPriceFilter(
-                        parseInt(g.currentTarget.value.replace("£", ""))
-                      )
-                    }
-                    required
-                  >
-                    <option>Select a Price</option>
-                    {priceArray.map((price, idx) => (
-                      <option key={idx}>£{price}</option>
-                    ))}
-                  </Form.Control>
-                </Form.Group>
-                <p>Bedrooms</p>
-                <ButtonGroup toggle>
-                  <ToggleButton
-                    type="radio"
-                    variant="primary"
-                    value="0"
-                    checked={bedFilter === "0"}
-                    onChange={(g) => setBedFilter(g.currentTarget.value)}
-                  >
-                    Any
-                  </ToggleButton>
-                  {bedbath.map((bed, idx) => (
+                <div className="filterSection">
+                  <h6 className="heading">Property Type</h6>
+                  <ButtonGroup toggle>
                     <ToggleButton
-                      key={idx}
                       type="radio"
-                      variant="primary"
-                      value={bed.value}
-                      checked={bedFilter === bed.value}
+                      variant="outline-primary"
+                      value=""
+                      checked={propertyTypeFilter === ""}
+                      onChange={(e) =>
+                        setPropertyTypeFilter(e.currentTarget.value)
+                      }
+                    >
+                      Any
+                    </ToggleButton>
+                    <ToggleButton
+                      type="radio"
+                      variant="outline-primary"
+                      value="Flat"
+                      checked={propertyTypeFilter === "Flat"}
+                      onChange={(e) =>
+                        setPropertyTypeFilter(e.currentTarget.value)
+                      }
+                    >
+                      Flat
+                    </ToggleButton>
+                    <ToggleButton
+                      type="radio"
+                      variant="outline-primary"
+                      value="House"
+                      checked={propertyTypeFilter === "House"}
+                      onChange={(e) =>
+                        setPropertyTypeFilter(e.currentTarget.value)
+                      }
+                    >
+                      House
+                    </ToggleButton>
+                    <ToggleButton
+                      type="radio"
+                      variant="outline-primary"
+                      value="Flat Share"
+                      checked={propertyTypeFilter === "Flat Share"}
+                      onChange={(e) =>
+                        setPropertyTypeFilter(e.currentTarget.value)
+                      }
+                    >
+                      Flat Share
+                    </ToggleButton>
+                  </ButtonGroup>
+                </div>
+                <div>
+                  <Form.Group>
+                    <h6 className="heading">Monthly Max</h6>
+                    <Form.Control
+                      as="select"
+                      custom
+                      value={priceFilter}
+                      onChange={(g) =>
+                        setPriceFilter(
+                          parseInt(g.currentTarget.value.replace("£", ""))
+                        )
+                      }
+                      required
+                    >
+                      <option>Select a Price</option>
+                      {priceArray.map((price, idx) => (
+                        <option key={idx}>£{price}</option>
+                      ))}
+                    </Form.Control>
+                  </Form.Group>
+                </div>
+                <div className="filterSection">
+                  <h6 className="heading">Bedrooms</h6>
+                  <ButtonGroup toggle>
+                    <ToggleButton
+                      type="radio"
+                      variant="outline-primary"
+                      value="0"
+                      checked={bedFilter === "0"}
                       onChange={(g) => setBedFilter(g.currentTarget.value)}
                     >
-                      {bed.name}
+                      Any
                     </ToggleButton>
-                  ))}
-                </ButtonGroup>
-                <p>Bathroom</p>
-                <ButtonGroup toggle>
-                  <ToggleButton
-                    type="radio"
-                    variant="primary"
-                    value="0"
-                    checked={bathFilter === "0"}
-                    onChange={(f) => setBathFilter(f.currentTarget.value)}
-                  >
-                    Any
-                  </ToggleButton>
-                  {bedbath.map((bath, idx) => (
+                    {bedbath.map((bed, idx) => (
+                      <ToggleButton
+                        key={idx}
+                        type="radio"
+                        variant="outline-primary"
+                        value={bed.value}
+                        checked={bedFilter === bed.value}
+                        onChange={(g) => setBedFilter(g.currentTarget.value)}
+                      >
+                        {bed.name}
+                      </ToggleButton>
+                    ))}
+                  </ButtonGroup>
+                </div>
+                <div className="filterSection">
+                  <h6 className="heading">Bathroom</h6>
+                  <ButtonGroup toggle>
                     <ToggleButton
-                      key={idx}
                       type="radio"
-                      variant="primary"
-                      value={bath.value}
-                      checked={bathFilter === bath.value}
+                      variant="outline-primary"
+                      value="0"
+                      checked={bathFilter === "0"}
                       onChange={(f) => setBathFilter(f.currentTarget.value)}
                     >
-                      {bath.name}
+                      Any
                     </ToggleButton>
-                  ))}
-                </ButtonGroup>
-                <p>Furnished Type</p>
-                <ButtonGroup toggle>
-                  <ToggleButton
-                    type="radio"
-                    variant="primary"
-                    value=""
-                    checked={furnishFilter === ""}
-                    onChange={(e) => setFurnishFilter(e.currentTarget.value)}
-                  >
-                    Any
-                  </ToggleButton>
-                  <ToggleButton
-                    type="radio"
-                    variant="primary"
-                    value="Furnished"
-                    checked={furnishFilter === "Furnished"}
-                    onChange={(e) => setFurnishFilter(e.currentTarget.value)}
-                  >
-                    Furnished
-                  </ToggleButton>
-                  <ToggleButton
-                    type="radio"
-                    variant="primary"
-                    value="Unfurnished"
-                    checked={furnishFilter === "Unfurnished"}
-                    onChange={(e) => setFurnishFilter(e.currentTarget.value)}
-                  >
-                    Unfurnished
-                  </ToggleButton>
-                </ButtonGroup>
-                <Button variant="primary" onClick={getProperties}>
+                    {bedbath.map((bath, idx) => (
+                      <ToggleButton
+                        key={idx}
+                        type="radio"
+                        variant="outline-primary"
+                        value={bath.value}
+                        checked={bathFilter === bath.value}
+                        onChange={(f) => setBathFilter(f.currentTarget.value)}
+                      >
+                        {bath.name}
+                      </ToggleButton>
+                    ))}
+                  </ButtonGroup>
+                </div>
+                <div className="filterSection">
+                  <h6 className="heading">Furnished Type</h6>
+                  <ButtonGroup toggle>
+                    <ToggleButton
+                      type="radio"
+                      variant="outline-primary"
+                      value=""
+                      checked={furnishFilter === ""}
+                      onChange={(e) => setFurnishFilter(e.currentTarget.value)}
+                    >
+                      Any
+                    </ToggleButton>
+                    <ToggleButton
+                      type="radio"
+                      variant="outline-primary"
+                      value="Furnished"
+                      checked={furnishFilter === "Furnished"}
+                      onChange={(e) => setFurnishFilter(e.currentTarget.value)}
+                    >
+                      Furnished
+                    </ToggleButton>
+                    <ToggleButton
+                      type="radio"
+                      variant="outline-primary"
+                      value="Unfurnished"
+                      checked={furnishFilter === "Unfurnished"}
+                      onChange={(e) => setFurnishFilter(e.currentTarget.value)}
+                    >
+                      Unfurnished
+                    </ToggleButton>
+                  </ButtonGroup>
+                </div>
+                <Button variant="outline-primary" onClick={getProperties}>
                   Apply
                 </Button>
               </Form>
             </Col>
-            <Col xs={12} md={8} >
+            <Col xs={12} md={8}>
+              {properties.length === 1 ? (
+                <h6 style={{ paddingBottom: 0 }} className="heading">
+                  {properties.length} Property
+                </h6>
+              ) : (
+                <h6
+                  style={{ paddingBottom: 0, marginBottom: 0 }}
+                  className="heading"
+                >
+                  {properties.length} Properties
+                </h6>
+              )}
               <CardDeck>
                 {properties.map((property) => (
                   <div key={property.id}>

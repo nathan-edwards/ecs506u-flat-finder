@@ -30,7 +30,6 @@ export default function NewProperty() {
       });
   }
 
-
   function handleSubmit(e) {
     e.preventDefault();
 
@@ -40,7 +39,9 @@ export default function NewProperty() {
       subject: subjectRef.current.value,
       desc: descRef.current.value,
       user: currentUser.uid,
-      date: `${year}${separator}${month<10?`0${month}`:`${month}`}${separator}${date}`,
+      date: `${year}${separator}${
+        month < 10 ? `0${month}` : `${month}`
+      }${separator}${date}`,
     });
     history.push("/");
     setLoading(false);
@@ -65,9 +66,20 @@ export default function NewProperty() {
                 <Form.Group id="description">
                   <Form.Label>Description</Form.Label>
                   <br></br>
-                  <Form.Control as="textarea" rows={10} cols={48} ref={descRef} required />
+                  <Form.Control
+                    as="textarea"
+                    rows={10}
+                    cols={48}
+                    ref={descRef}
+                    required
+                  />
                 </Form.Group>
-                <Button disabled={loading} className="w-100" type="submit">
+                <Button
+                  disabled={loading}
+                  className="w-100"
+                  type="submit"
+                  style={{ backgroundColor: "#4DB790", borderColor: "#4DB790" }}
+                >
                   Submit
                 </Button>
               </Form>

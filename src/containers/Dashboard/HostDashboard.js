@@ -4,6 +4,7 @@ import { PropertyCardEdit } from "../../components/PropertyCard/PropertyCard";
 import Loader from "react-loaders";
 import { firestore } from "../../firebase";
 import { useAuth } from "../../contexts/AuthContext";
+import "./HostDashboard.css";
 
 export default function HostDashboard() {
   const [loading, setLoading] = useState(true);
@@ -33,16 +34,32 @@ export default function HostDashboard() {
 
   return (
     <>
-      <div className="propertyGrid">
+      <div className="propertyGrid hostDashboard">
         <Row>
-          <Col>
-            <h2>Host Tools</h2>
-            <h3>Hello {currentUser.displayName}</h3>
-            <Button href="/profile/update">Update Profile</Button>
-            <Button href="/profile/update">New Property</Button>
+          <Col xs={4} md={3}>
+            <h2 style={{fontWeight: 600}}>Host Dashboard</h2>
+            <h3 style={{fontSize: "x-large"}}>Hello, <span style={{color: "#4DB790"}}>{currentUser.displayName}</span></h3>
+            <Button
+              href="/profile/update"
+              style={{ backgroundColor: "#4DB790", borderColor: "#4DB790", marginTop: 15 }}
+            >
+              Update Profile
+            </Button>
           </Col>
-          <Col>
-            <h2>Properties</h2>
+          <Col xs={12} md={8}>
+            <Row>
+              <Col>
+                <h2>Properties</h2>
+              </Col>
+              <Col xs={10}>
+                <Button
+                  href="/property/new"
+                  style={{ backgroundColor: "#4DB790", borderColor: "#4DB790" }}
+                >
+                  New Property
+                </Button>
+              </Col>
+            </Row>
             <CardDeck>
               {properties.map((property) => (
                 <div key={property.id}>

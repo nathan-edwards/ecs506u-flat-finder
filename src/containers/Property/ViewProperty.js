@@ -21,12 +21,9 @@ export default function ViewProperty() {
   function titleCase(str) {
     var splitStr = str.toLowerCase().split(" ");
     for (var i = 0; i < splitStr.length; i++) {
-      // You do not need to check if i is larger than splitStr length, as your for does that for you
-      // Assign it back to the array
       splitStr[i] =
         splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);
     }
-    // Directly return the joined string
     return splitStr.join(" ");
   }
 
@@ -96,19 +93,6 @@ export default function ViewProperty() {
               <h1 style={{ fontSize: "26px", padding: "28px 0 12px 0 " }}>
                 {titleCase(property.current.address[0])}
               </h1>
-              <h2 style={{ fontSize: "26px", padding: "28px 0 12px 0 " }}>
-                {titleCase(property.current.address[0]) +
-                  ", " +
-                  titleCase(property.current.address[1]) +
-                  ", " +
-                  titleCase(property.current.address[2]) +
-                  ", " +
-                  titleCase(property.current.address[3]) +
-                  " " +
-                  titleCase(property.current.address[4]) +
-                  ", " +
-                  titleCase(property.current.address[5])}
-              </h2>
             </Row>
             <Row>
               <Gallery>
@@ -128,6 +112,19 @@ export default function ViewProperty() {
                   )}
                 </Item>
               </Gallery>
+              <h4 style={{ padding: "28px 0 0 0 " }}>
+                {titleCase(property.current.address[0]) +
+                  ", " +
+                  titleCase(property.current.address[1]) +
+                  ", " +
+                  titleCase(property.current.address[2]) +
+                  ", " +
+                  property.current.address[3].toUpperCase() +
+                  " " +
+                  property.current.address[4].toUpperCase() +
+                  ", " +
+                  titleCase(property.current.address[5])}
+              </h4>
             </Row>
           </Col>
         </Row>
@@ -173,11 +170,12 @@ export default function ViewProperty() {
                 </span>
               </Card.Header>
               <Card.Body>
-                Host: {host.current.name}
-                Email: {host.current.email}
-                Phone Number: {host.current.phoneNumber}
+                <p>Host: {host.current.name}</p>
+                <p>Email: {host.current.email}</p>
+                <p>Phone Number: {host.current.phoneNumber}</p>
                 <Button
                   onClick={handleClick}
+                  style={{ backgroundColor: "#4DB790", borderColor: "#4DB790" }}
                   variant="primary"
                   // target="_blank"
                 >

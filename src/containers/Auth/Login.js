@@ -45,17 +45,27 @@ export default function Login() {
                   <Form.Label>Password</Form.Label>
                   <Form.Control type="password" ref={passwordRef} required />
                 </Form.Group>
-                <Button disabled={loading} className="w-100" type="submit">
+                <Button
+                  disabled={loading}
+                  className="w-100"
+                  type="submit"
+                  style={{ backgroundColor: "#4DB790", borderColor: "#4DB790" }}
+                >
                   Log In
                 </Button>
               </Form>
               <div className="w-100 text-center mt-3">
-                <Link to="/forgot-password">Forgot Password?</Link>
+                <Link style={{ color: "#4DB790" }} to="/forgot-password">
+                  Forgot Password?
+                </Link>
               </div>
             </Card.Body>
           </Card>
           <div className="w-100 text-center mt-2">
-            Need an account? <Link to="/signup">Sign Up</Link>
+            Need an account?{" "}
+            <Link style={{ color: "#4DB790" }} to="/signup">
+              Sign Up
+            </Link>
           </div>
         </div>
       </Container>

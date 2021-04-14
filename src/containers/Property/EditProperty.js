@@ -42,6 +42,15 @@ export default function EditProperty() {
 
   const editRef = firestore.collection("properties");
 
+  function titleCase(str) {
+    var splitStr = str.toLowerCase().split(" ");
+    for (var i = 0; i < splitStr.length; i++) {
+      splitStr[i] =
+        splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);
+    }
+    return splitStr.join(" ");
+  }
+
   async function fetchProperty(propertyID) {
     let data;
     const propertyRef = firestore.collection("properties").doc(`${propertyID}`);
@@ -132,11 +141,8 @@ export default function EditProperty() {
 
   return (
     <>
-      <Container
-        className="d-flex align-items-center justify-content-center"
-        style={{ minHeight: "100vh" }}
-      >
-        <div className="w-100" style={{ maxWidth: "400px" }}>
+      <Container className="d-flex align-items-center justify-content-center">
+        <div className="w-100" style={{ maxWidth: "500px" }}>
           <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton>
               <Modal.Title>Warning Property Deletion</Modal.Title>
@@ -153,7 +159,7 @@ export default function EditProperty() {
               </Button>
             </Modal.Footer>
           </Modal>
-          <Card>
+          <Card style={{ borderColor: "transparent" }}>
             <Card.Body>
               <h2 className="text-center mb-4">Edit Property</h2>
               {error && <Alert variant="danger">{error}</Alert>}
@@ -164,7 +170,7 @@ export default function EditProperty() {
                     type="text"
                     ref={addressLine1Ref}
                     required
-                    placeholder={property.current.address[0]}
+                    placeholder={titleCase(property.current.address[0])}
                   />
                 </Form.Group>
                 <Form.Group id="address">
@@ -173,7 +179,7 @@ export default function EditProperty() {
                     type="text"
                     ref={addressLine2Ref}
                     required
-                    placeholder={property.current.address[1]}
+                    placeholder={titleCase(property.current.address[1])}
                   />
                 </Form.Group>
                 <Form.Group id="address">
@@ -182,7 +188,7 @@ export default function EditProperty() {
                     type="text"
                     ref={cityRef}
                     required
-                    placeholder={property.current.address[2]}
+                    placeholder={titleCase(property.current.address[2])}
                   />
                 </Form.Group>
                 <Form.Group id="address">
@@ -192,9 +198,9 @@ export default function EditProperty() {
                     ref={postcodeRef}
                     required
                     placeholder={
-                      property.current.address[3] +
+                      property.current.address[3].toUpperCase() +
                       " " +
-                      property.current.address[4]
+                      property.current.address[4].toUpperCase()
                     }
                   />
                 </Form.Group>
@@ -204,7 +210,7 @@ export default function EditProperty() {
                     type="text"
                     ref={countryRef}
                     required
-                    placeholder={property.current.address[5]}
+                    placeholder={titleCase(property.current.address[5])}
                   />
                 </Form.Group>
                 <Form.Group id="description">
@@ -214,7 +220,7 @@ export default function EditProperty() {
                     type="text"
                     ref={descRef}
                     required
-                    placeholder={property.current.desc}
+                    placeholder={titleCase(property.current.desc)}
                   />
                 </Form.Group>
                 <Form.Group id="bathBed">
@@ -290,7 +296,15 @@ export default function EditProperty() {
                     </Button>
                   </Col>
                   <Col>
-                    <Button disabled={loading} className="w-100" type="submit">
+                    <Button
+                      disabled={loading}
+                      className="w-100"
+                      type="submit"
+                      style={{
+                        backgroundColor: "#4DB790",
+                        borderColor: "#4DB790",
+                      }}
+                    >
                       Submit
                     </Button>
                   </Col>

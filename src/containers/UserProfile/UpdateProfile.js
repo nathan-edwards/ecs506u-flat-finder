@@ -1,8 +1,7 @@
 import React, { useRef, useState } from "react";
-import { Form, Button, Card, Alert } from "react-bootstrap";
-import "./UpdateProfile.css";
+import { Form, Button, Card, Alert, Container, Col, Row } from "react-bootstrap";
 import { useAuth } from "../../contexts/AuthContext";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 export default function UpdateProfile() {
   const displayNameRef = useRef();
@@ -27,17 +26,10 @@ export default function UpdateProfile() {
     setLoading(true);
     setError("");
 
-    // Version with photos not currently working
-
-    // if (displayNameRef.current.value !== currentUser.displayName && photoURLRef.current.value) {
-    //   promises.push(updateProfile(displayNameRef.current.value, photoURLRef));
-    // } else if (displayNameRef.current.value !== currentUser.displayName) {
-    //   promises.push(updateProfile(displayNameRef.current.value, undefined));
-    // } else if (photoURLRef.current.value) {
-    //   promises.push(updateProfile(undefined, photoURLRef))
-    // }
-
-    if (displayNameRef.current.value !== currentUser.displayName || photoURLRef.current.value !== currentUser.photoURL) {
+    if (
+      displayNameRef.current.value !== currentUser.displayName ||
+      photoURLRef.current.value !== currentUser.photoURL
+    ) {
       promises.push(
         updateProfile(displayNameRef.current.value, photoURLRef.current.value)
       );
@@ -65,63 +57,98 @@ export default function UpdateProfile() {
 
   return (
     <>
-      <Card>
-        <Card.Body>
-          <h2 className="text-center mb-4"><b>Update Profile</b></h2>
-          {error && <Alert variant="danger">{error}</Alert>}
-          <Form onSubmit={handleSubmit}>
-            <Form.Group id="display-name">
-              <Form.Label>Name</Form.Label>
-              <Form.Control
-                type="text"
-                ref={displayNameRef}
-                required
-                defaultValue={currentUser.displayName}
-              />
-            </Form.Group>
-            <Form.Group id="user-type">
-              <Form.Label>User Type</Form.Label>
-              <Form.Control
-                type="text"
-                ref={photoURLRef}
-                required
-                defaultValue={currentUser.photoURL}
-              />
-            </Form.Group>
-            <Form.Group id="email">
-              <Form.Label>Email</Form.Label>
-              <Form.Control
-                type="email"
-                ref={emailRef}
-                required
-                defaultValue={currentUser.email}
-              />
-            </Form.Group>
-            <Form.Group id="password">
-              <Form.Label>Password</Form.Label>
-              <Form.Control
-                type="password"
-                ref={passwordRef}
-                placeholder="Leave blank to keep the same"
-              />
-            </Form.Group>
-            <Form.Group id="password-confirm">
-              <Form.Label>Password Confirmation</Form.Label>
-              <Form.Control
-                type="password"
-                ref={passwordConfirmRef}
-                placeholder="Leave blank to keep the same"
-              />
-            </Form.Group>
-            <Button id ="update" disabled={loading} className="w-100 mt-3" type="submit">
-              Update
-            </Button>
-          </Form>
-        </Card.Body>
-      </Card>
-      <div className="w-100 text-center mt-2">
-        <Link id="cancel" to="/">Cancel</Link>
-      </div>
+      <Container
+        className="d-flex align-items-center justify-content-center"
+        style={{ minHeight: "90vh" }}
+      >
+        <div className="w-100" style={{ maxWidth: "500px" }}>
+          <Card style={{ borderColor: "transparent" }}>
+            <Card.Body>
+              <h2 className="text-center mb-4">
+                <b>Update Profile</b>
+              </h2>
+              {error && <Alert variant="danger">{error}</Alert>}
+              <Form onSubmit={handleSubmit}>
+                <Form.Group id="display-name">
+                  <Form.Label>Name</Form.Label>
+                  <Form.Control
+                    type="text"
+                    ref={displayNameRef}
+                    required
+                    defaultValue={currentUser.displayName}
+                  />
+                </Form.Group>
+                <Form.Group id="user-type">
+                  <Form.Label>User Type</Form.Label>
+                  <Form.Control
+                    custom
+                    as="select"
+                    ref={photoURLRef}
+                    defaultValue={currentUser.photoURL}
+                    required
+                  >
+                    <option>Host</option>
+                    <option>Guest</option>
+                  </Form.Control>
+                </Form.Group>
+                <Form.Group id="email">
+                  <Form.Label>Email</Form.Label>
+                  <Form.Control
+                    type="email"
+                    ref={emailRef}
+                    required
+                    defaultValue={currentUser.email}
+                  />
+                </Form.Group>
+                <Form.Group id="password">
+                  <Form.Label>Password</Form.Label>
+                  <Form.Control
+                    type="password"
+                    ref={passwordRef}
+                    placeholder="Leave blank to keep the same"
+                  />
+                </Form.Group>
+                <Form.Group id="password-confirm">
+                  <Form.Label>Password Confirmation</Form.Label>
+                  <Form.Control
+                    type="password"
+                    ref={passwordConfirmRef}
+                    placeholder="Leave blank to keep the same"
+                  />
+                </Form.Group>
+                <Row>
+                  <Col>
+                    <Button
+                      id="cancel"
+                      disabled={loading}
+                      variant="danger"
+                      className="w-100 mt-3"
+                      href="/"
+                    >
+                      Cancel
+                    </Button>
+                  </Col>
+                  <Col>
+                    <Button
+                      id="update"
+                      style={{
+                        backgroundColor: "#4DB790",
+                        borderColor: "#4DB790",
+                      }}
+                      disabled={loading}
+                      className="w-100 mt-3"
+                      type="submit"
+                    >
+                      Update
+                    </Button>
+                  </Col>
+                </Row>
+              </Form>
+            </Card.Body>
+          </Card>
+          <div className="w-100 text-center mt-2"></div>
+        </div>
+      </Container>
     </>
   );
 }
